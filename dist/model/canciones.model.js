@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cancion = void 0;
-var mongoose_1 = require("mongoose");
-var cancionShema = new mongoose_1.Schema({
+const mongoose_1 = require("mongoose");
+const cancionShema = new mongoose_1.Schema({
     nombre: {
         type: String,
         required: [true, 'nombre obligatorio']

@@ -33,22 +33,19 @@ CancionesRoute.get('/', (req,res) => {
 = OBTENER CANCIONES POR ARTISTA
 =============================================================
 */
-CancionesRoute.get('/obtenerX', (req,res) => {
-
-    const obtenerX = {
-        nombre : req.body.nombre  || '',
-        artista: req.body.artista || '',
-        tipo   : req.body.tipo    || '',
-    }
+CancionesRoute.get('/obtener/:key/:valor', (req,res) => {
+    
+    const key = req.params.key;
+    const valor = req.params.valor;
 
     var buscar = {};
 
-    if (obtenerX.artista != '') {
-        buscar = {artista: req.body.artista}  
-    }else if(obtenerX.nombre != ''){
-        buscar = {nombre: req.body.nombre}
-    }else if(obtenerX.tipo != ''){
-        buscar = {tipo: req.body.tipo}
+    if (key === 'artista') {
+        buscar = {artista: valor}  
+    }else if(key === 'nombre'){
+        buscar = {nombre: valor}
+    }else if(key === 'tipo'){
+        buscar = {tipo: valor}
     }else{
         buscar = {artista: '-12kdsa'} 
     }
@@ -65,17 +62,6 @@ CancionesRoute.get('/obtenerX', (req,res) => {
     }).catch((err: any) => {
         res.json(err);
     })
-
-    /* 
-    Esto es lo que colocaras en el servidor 
-    x = artista, nombre, tipo
-    obtenerCancionPor(x,dato){
-        const buscar = {
-            x: dato
-        }
-        return this.http.get('localhost:3000/canciones/obtenerX',buscar);
-    }
-    */
 
 });
 
@@ -99,6 +85,70 @@ CancionesRoute.post('/crear', (req,res) => {
 
 
 });
+
+/* 
+=============================================================
+= ACTUALIZAR CANCION
+=============================================================
+*/
+
+CancionesRoute.post('/update', (req,res) => {
+
+    const cancion = {
+        artista  : req.body.artista,
+        nombre   : req.body.nombre,
+        letra    : req.body.letra,
+        tipo     : req.body.tipo
+    }
+
+    Cancion.findByIdAndUpdate(req.body.id,cancion,{new: true},(err:any,cancionBD:any) => {
+
+        if(err) throw err + 'false';
+
+        if (!cancionBD) {
+            
+            return res.json({
+                ok:false,
+                mensaje: 'Id de la cancion no encontrado'
+            })
+        }
+
+
+        res.json({
+            ok: true,
+            resp: cancionBD
+        })
+
+    })
+})
+
+/* 
+=============================================================
+= ELIMINAR CANCION
+=============================================================
+*/
+CancionesRoute.post('/delete', (req,res) => {
+
+    Cancion.findByIdAndDelete(req.body.id,null,(err,cancionBD)=>{
+        
+        if(err) throw err + 'false';
+
+        if (!cancionBD) {
+            
+            return res.json({
+                ok:false,
+                mensaje: 'Id de la cancion no encontrado'
+            })
+        }
+        
+
+        res.json({
+            ok: true,
+            resp: 'Eliminado'
+        })
+    })
+
+})
 
 
 export default CancionesRoute;

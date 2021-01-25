@@ -1,21 +1,27 @@
-import Serve from "./class/serve";
+import  Serve  from './class/serve';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import CancionesRoute from "./routes/canciones";
 
 const serve = new Serve();
 
+
+
 //Body parse
 serve.app.use(bodyParser.urlencoded({extended: true}));
 serve.app.use(bodyParser.json());
+
+
 
 /* 
 =========================================================
 = RUTA CANCION
 =========================================================
 */
-
 serve.app.use('/canciones',CancionesRoute);
+
+
+
 
 /* 
 =========================================================
@@ -23,7 +29,7 @@ serve.app.use('/canciones',CancionesRoute);
 =========================================================
 */
 mongoose.connect('mongodb://localhost:27017/appIglesia',
-        {useNewUrlParser: true, useCreateIndex: true},
+        {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true},
         (err) => {
             // Si existe un error que no siga 
             if (err) throw err;
@@ -31,7 +37,7 @@ mongoose.connect('mongodb://localhost:27017/appIglesia',
             // Si no ocurre un error tons
             console.log("Base de datos online");
         }
-        );
+);
 
 
 
@@ -43,5 +49,5 @@ mongoose.connect('mongodb://localhost:27017/appIglesia',
 =========================================================
 */
 serve.start(()=>{
-    console.log(`Servidor corriendo en puerto ${serve.port}`);
-})
+    console.log(`Corriendo en puerto ${ serve.port }`);
+});
