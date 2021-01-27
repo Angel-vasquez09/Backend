@@ -28,31 +28,25 @@ CancionesRoute.get('/', (req,res) => {
     
 
 });
+
+
 /* 
 =============================================================
 = OBTENER CANCIONES POR ARTISTA
 =============================================================
 */
-CancionesRoute.get('/obtener/:key/:valor', (req,res) => {
-    
-    const key = req.params.key;
-    const valor = req.params.valor;
-
-    var buscar = {};
-
-    if (key === 'artista') {
-        buscar = {artista: valor}  
-    }else if(key === 'nombre'){
-        buscar = {nombre: valor}
-    }else if(key === 'tipo'){
-        buscar = {tipo: valor}
-    }else{
-        buscar = {artista: '-12kdsa'} 
-    }
-
-    console.log(buscar);
-
-    const getCancion = Cancion.find(buscar).exec().then((resp: any) => {
+CancionesRoute.get('/buscar', (req,res) => {
+    const buscar = req.query.texto;
+    const getCancion = Cancion  
+        .find(
+        {$or: 
+            [
+                {nombre  : {$regex: '.*' + buscar +  '.*',$options: 'i'} },
+                {tipo    : {$regex: '.*' + buscar +  '.*',$options: 'i'} },
+                {artista : {$regex: '.*' + buscar +  '.*',$options: 'i'} }
+            ]
+        })
+        .exec().then((resp: any) => {
         
         res.json({
             cancion: resp
@@ -64,6 +58,7 @@ CancionesRoute.get('/obtener/:key/:valor', (req,res) => {
     })
 
 });
+
 
 /* 
 =============================================================
