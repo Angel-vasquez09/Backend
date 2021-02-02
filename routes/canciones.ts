@@ -72,7 +72,7 @@ CancionesRoute.post('/crear', (req,res) => {
     Cancion.create( req.body ).then(cancionBD => {
         
         res.json({
-            error: false,
+            ok: true,
             cacion: cancionBD
         })
 
@@ -90,10 +90,11 @@ CancionesRoute.post('/crear', (req,res) => {
 CancionesRoute.post('/update', (req,res) => {
 
     const cancion = {
-        artista  : req.body.artista,
-        nombre   : req.body.nombre,
-        letra    : req.body.letra,
-        tipo     : req.body.tipo
+        artista    : req.body.artista,
+        nombre     : req.body.nombre,
+        letra      : req.body.letra,
+        tipo       : req.body.tipo,
+        ultimaFecha: req.body.ultimaFecha
     }
 
     Cancion.findByIdAndUpdate(req.body.id,cancion,{new: true},(err:any,cancionBD:any) => {

@@ -11,16 +11,21 @@ const cancionShema = new Schema({
         default: ''
     },
     letra:{
-        type: String
+        type: String,
+        required: [true, 'letra obligatorio']
     },
     artista: {
         type: String,
         required: [true,'artista obligatorio']
     },
     tipo: {
-        type: String
+        type: String,
+        required: [true, 'tipo obligatorio']
     },
     created: {
+        type: Date
+    },
+    ultimaFecha: {
         type: Date
     }
 })
@@ -31,12 +36,14 @@ cancionShema.pre<Icancion>('save', function (next) {
 })
 
 interface Icancion extends Document {
-    artista: string;
-    created: Date;
-    nombre : string;
-    letra  : string;
-    tipo   : string;
-    img    : string;
+    artista     : string;
+    ultimaFecha? : Date;
+    created     : Date;
+    nombre      : string;
+    letra       : string;
+    tipo        : string;
+    img         : string;
+
 }
 
 export const Cancion = model<Icancion>('Cancion',cancionShema);

@@ -12,16 +12,21 @@ const cancionShema = new mongoose_1.Schema({
         default: ''
     },
     letra: {
-        type: String
+        type: String,
+        required: [true, 'letra obligatorio']
     },
     artista: {
         type: String,
         required: [true, 'artista obligatorio']
     },
     tipo: {
-        type: String
+        type: String,
+        required: [true, 'tipo obligatorio']
     },
     created: {
+        type: Date
+    },
+    ultimaFecha: {
         type: Date
     }
 });

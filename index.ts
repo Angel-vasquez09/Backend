@@ -2,6 +2,8 @@ import  Serve  from './class/serve';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import CancionesRoute from "./routes/canciones";
+import cors from 'cors';
+import ListCancionesRoute from "./routes/listCanciones"
 
 const serve = new Serve();
 
@@ -10,6 +12,9 @@ const serve = new Serve();
 //Body parse
 serve.app.use(bodyParser.urlencoded({extended: true}));
 serve.app.use(bodyParser.json());
+
+// Cords
+serve.app.use(cors({ origin: true, credentials: true  }));
 
 
 
@@ -20,8 +25,12 @@ serve.app.use(bodyParser.json());
 */
 serve.app.use('/canciones',CancionesRoute);
 
-
-
+/* 
+=========================================================
+= RUTA DE LISTA DE CANCIONES
+=========================================================
+*/
+serve.app.use('/listC',ListCancionesRoute);
 
 /* 
 =========================================================

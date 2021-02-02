@@ -53,7 +53,7 @@ CancionesRoute.get('/buscar', (req, res) => {
 CancionesRoute.post('/crear', (req, res) => {
     canciones_model_1.Cancion.create(req.body).then(cancionBD => {
         res.json({
-            error: false,
+            ok: true,
             cacion: cancionBD
         });
     });
@@ -68,7 +68,8 @@ CancionesRoute.post('/update', (req, res) => {
         artista: req.body.artista,
         nombre: req.body.nombre,
         letra: req.body.letra,
-        tipo: req.body.tipo
+        tipo: req.body.tipo,
+        ultimaFecha: req.body.ultimaFecha
     };
     canciones_model_1.Cancion.findByIdAndUpdate(req.body.id, cancion, { new: true }, (err, cancionBD) => {
         if (err)

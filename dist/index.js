@@ -7,16 +7,26 @@ const serve_1 = __importDefault(require("./class/serve"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const canciones_1 = __importDefault(require("./routes/canciones"));
+const cors_1 = __importDefault(require("cors"));
+const listCanciones_1 = __importDefault(require("./routes/listCanciones"));
 const serve = new serve_1.default();
 //Body parse
 serve.app.use(body_parser_1.default.urlencoded({ extended: true }));
 serve.app.use(body_parser_1.default.json());
+// Cords
+serve.app.use(cors_1.default({ origin: true, credentials: true }));
 /*
 =========================================================
 = RUTA CANCION
 =========================================================
 */
 serve.app.use('/canciones', canciones_1.default);
+/*
+=========================================================
+= RUTA DE LISTA DE CANCIONES
+=========================================================
+*/
+serve.app.use('/listC', listCanciones_1.default);
 /*
 =========================================================
 = NOS CONECTAMOS A LA BASE DE DATOS
