@@ -15,6 +15,13 @@ serve.app.use(body_parser_1.default.urlencoded({ extended: true }));
 serve.app.use(body_parser_1.default.json());
 // Cords
 serve.app.use(cors_1.default({ origin: true, credentials: true }));
+serve.app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
 /*
 =========================================================
 = RUTA CANCION
@@ -32,7 +39,7 @@ serve.app.use('/listC', listCanciones_1.default);
 = NOS CONECTAMOS A LA BASE DE DATOS
 =========================================================
 */
-mongoose_1.default.connect('mongodb://localhost:27017/appIglesia', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err) => {
+mongoose_1.default.connect('mongodb+srv://root:1234@cluster0.h8qkm.mongodb.net/appIglesia?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err) => {
     // Si existe un error que no siga 
     if (err)
         throw err;
